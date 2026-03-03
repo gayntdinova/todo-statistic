@@ -17,7 +17,10 @@ function processCommand(command) {
             process.exit(0);
             break;
         case 'show':
-            parseFile(files);
+            parseFile();
+            break;
+        case 'important':
+            importantFile();
             break;
         default:
             console.log('wrong command');
@@ -25,7 +28,19 @@ function processCommand(command) {
     }
 }
 
-function parseFile(file) {
+function importantFile() {
+    for (let file of files) {
+        for (let str of file.split('\n')) {
+            if (str.includes('// TODO') && str.includes('!') ){
+                const processedStr = str.split('// TODO ')[1];
+                if (processedStr !== undefined)
+                    console.log(processedStr);
+            }
+        }
+    }
+}
+
+function parseFile () {
     for (let file of files) {
         for (let str of file.split('\n')) {
             if (str.includes('// TODO')){
@@ -36,3 +51,4 @@ function parseFile(file) {
         }
     }
 }
+
