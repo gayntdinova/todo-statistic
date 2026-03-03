@@ -12,7 +12,7 @@ function getFiles() {
 }
 
 function processCommand(command) {
-    switch (command) {
+    switch (command.split(" ")[0]) {
         case 'exit':
             process.exit(0);
             break;
@@ -21,6 +21,9 @@ function processCommand(command) {
             break;
         case 'important':
             importantFile();
+            break;
+        case `user`:
+            userNameFile(command.split(" ")[1].toLowerCase());
             break;
         default:
             console.log('wrong command');
@@ -45,6 +48,18 @@ function parseFile () {
         for (let str of file.split('\n')) {
             if (str.includes('// TODO')){
                 const processedStr = str.split('// TODO ')[1];
+                if (processedStr !== undefined)
+                    console.log(processedStr);
+            }
+        }
+    }
+}
+
+function userNameFile (userName) {
+    for (let file of files) {
+        for (let str of file.split('\n')) {
+            if (str.includes('// TODO') && str.toLowerCase().includes(userName)){
+                const processedStr = str.split('// TODO ').split(';')[2];
                 if (processedStr !== undefined)
                     console.log(processedStr);
             }
