@@ -25,6 +25,10 @@ function processCommand(command) {
         case `user`:
             userNameFile(command.split(" ")[1].toLowerCase());
             break;
+        case 'sort':
+            sortFile(command.split(" ")[1]);
+            break;
+
         default:
             console.log('wrong command');
             break;
@@ -59,11 +63,43 @@ function userNameFile (userName) {
     for (let file of files) {
         for (let str of file.split('\n')) {
             if (str.includes('// TODO') && str.toLowerCase().includes(userName)){
-                const processedStr = str.split('// TODO ').split(';')[2];
+                const processedStr = str.split('// TODO ')[1].split(';')[2];
                 if (processedStr !== undefined)
                     console.log(processedStr);
             }
         }
     }
 }
+function sortImportance(){
+    const Arr= []
+    for (let file of files) {
+        for (let str of file.split('\n')) {
+            if (str.includes('// TODO')){
+                const processedStr = str.split('// TODO ')[1];
+                if (str.includes('!')){
+                    if (processedStr !== undefined)
+                        console.log(processedStr);
+                }
+                else {
+                    if (processedStr !== undefined)
+                        Arr.push(processedStr);
+                }
+            
+            }
+        }
+    }
+    for (let element of Arr){
+        console.log(element);
+    }
+}
 
+function sortFile (sortBy) {
+    switch (sortBy){
+        case 'importance':
+           sortImportance();
+           break; 
+        case 'date':
+            
+    }
+    
+}
